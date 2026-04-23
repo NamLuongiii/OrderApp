@@ -16,21 +16,41 @@ func NewCreateProductController(createProductUseCase in.CreateProductUseCase) *C
 	}
 }
 
+func (c *CreateProductController) BindHttpCall(r *gin.Engine) {
+	r.POST("/product", c.CreateProduct)
+}
+
 func (c *CreateProductController) CreateProduct(httpCtx *gin.Context) {
-	command := in.CreateProductCommand{
-		Name:  "MacBook pro",
-		Price: 100,
-	}
+	body := struct {
+		Name  string
+		Price string
+	}{}
 
-	e := c.CreateProductUseCase.CreateProduct(command)
-
+	e := httpCtx.ShouldBindJSON(&body)
 	if e != nil {
-		httpCtx.JSON(500, gin.H{
-			"message": e.Error(),
-		})
-	} else {
-		httpCtx.JSON(200, gin.H{
-			"message": "success",
-		})
+		returnError(httpCtx, 400, e)
+		return
 	}
+
+	command, e := in.NewCreateProductCommand(body.Name, body.Price)
+	if e != nil {
+		returnError(httpCtx, 400, e)
+		return
+	}
+
+	e = c.CreateProductUseCase.CreateProduct(*command)
+	if e != nil {
+		returnError(httpCtx, 500, e)
+		return
+	}
+
+	httpCtx.JSON(200, gin.H{
+		"message": "success",
+	})
+}
+
+func returnError(httpCtx *gin.Context, errorCode int, e error) {
+	httpCtx.JSON(errorCode, gin.H{
+		"message": e.Error(),
+	})
 }

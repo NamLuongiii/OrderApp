@@ -1,15 +1,26 @@
 package persistence
 
-import "fmt"
+import (
+	"OrderApp/product/application/domain/model"
+	"fmt"
+)
 
 type ProductAdapter struct {
 }
 
-func NewSaveProductPortImpl() *ProductAdapter {
+func ProductAdapterImpl() *ProductAdapter {
 	return &ProductAdapter{}
 }
 
-func (p *ProductAdapter) SaveProduct() error {
-	fmt.Println("Save product to database")
+func (p *ProductAdapter) SaveProduct(product *model.Product) error {
+	fmt.Println("Save product ", product.GetName(), product.GetFinalPrice())
 	return nil
+}
+
+func (p *ProductAdapter) GetProduct(id string) (*model.Product, error) {
+	return nil, nil
+}
+
+func (p *ProductAdapter) GetPaginatedProducts(page, size int) ([]*model.Product, error) {
+	return nil, nil
 }

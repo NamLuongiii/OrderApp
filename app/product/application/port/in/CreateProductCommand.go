@@ -1,14 +1,22 @@
 package in
 
-import "errors"
+import (
+	"OrderApp/common"
+	"errors"
+)
 
 type CreateProductCommand struct {
 	Name  string
-	Price int
+	Price string
 }
 
-func NewCreateProductCommand(name string, price int) (*CreateProductCommand, error) {
+func NewCreateProductCommand(name string, price string) (*CreateProductCommand, error) {
 	e := validateName(name)
+	if e != nil {
+		return nil, e
+	}
+
+	_, e = common.NewPositiveMoney(price)
 	if e != nil {
 		return nil, e
 	}

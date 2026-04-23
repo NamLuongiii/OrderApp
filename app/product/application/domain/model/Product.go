@@ -19,9 +19,25 @@ func NewProduct(id string, name string, price common.Money, salePrice *common.Mo
 	}
 }
 
-func (p Product) GetFinalPrice() common.Money {
+func NewProductWithoutId(name string, price common.Money, salePrice *common.Money) *Product {
+	return &Product{
+		name:      name,
+		price:     &price,
+		salePrice: salePrice,
+	}
+}
+
+func (p *Product) GetFinalPrice() common.Money {
 	if p.salePrice != nil {
 		return *p.salePrice
 	}
 	return *p.price
+}
+
+func (p *Product) GetId() string {
+	return p.id
+}
+
+func (p *Product) GetName() string {
+	return p.name
 }
