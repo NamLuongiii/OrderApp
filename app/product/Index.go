@@ -10,8 +10,12 @@ import (
 
 func Boostrap(r *gin.Engine) {
 	persistenceProductAdapter := persistence.ProductAdapterImpl()
+
 	createProductUseCase := usecase.NewCreateProduct(persistenceProductAdapter)
 	createProductController := web.NewCreateProductController(createProductUseCase)
-
 	createProductController.BindHttpCall(r)
+
+	getProductUseCase := usecase.NewGetProduct(persistenceProductAdapter)
+	getProductController := web.NewGetProductController(getProductUseCase)
+	getProductController.BindHttpCall(r)
 }

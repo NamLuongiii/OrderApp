@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"OrderApp/common"
+	"OrderApp/common/class"
 	"OrderApp/product/application/domain/model"
 	"OrderApp/product/application/port/in"
 	"OrderApp/product/application/port/out"
@@ -18,7 +18,7 @@ func NewCreateProduct(saveProductPort out.PersistenceProductPort) *CreateProduct
 }
 
 func (service *CreateProduct) CreateProduct(command in.CreateProductCommand) error {
-	price, e := common.NewPositiveMoney(command.Price)
+	price, e := class.NewPositiveMoney(command.Price)
 	if e != nil {
 		return e
 	}

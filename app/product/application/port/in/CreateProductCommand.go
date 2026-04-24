@@ -1,7 +1,7 @@
 package in
 
 import (
-	"OrderApp/common"
+	"OrderApp/common/class"
 	"errors"
 )
 
@@ -16,7 +16,7 @@ func NewCreateProductCommand(name string, price string) (*CreateProductCommand, 
 		return nil, e
 	}
 
-	_, e = common.NewPositiveMoney(price)
+	_, e = class.NewPositiveMoney(price)
 	if e != nil {
 		return nil, e
 	}

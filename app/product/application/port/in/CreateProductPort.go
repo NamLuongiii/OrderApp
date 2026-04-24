@@ -1,5 +1,5 @@
 package in
 
-type CreateProductUseCase interface {
+type CreateProductPort interface {
 	CreateProduct(command CreateProductCommand) error
 }

@@ -1,6 +1,7 @@
 package persistence
 
 import (
+	"OrderApp/common/class"
 	"OrderApp/product/application/domain/model"
 	"fmt"
 )
@@ -22,5 +23,14 @@ func (p *ProductAdapter) GetProduct(id string) (*model.Product, error) {
 }
 
 func (p *ProductAdapter) GetPaginatedProducts(page, size int) ([]*model.Product, error) {
-	return nil, nil
+	m1, _ := class.NewPositiveMoney("1000")
+	m2, _ := class.NewPositiveMoney("800")
+	return []*model.Product{
+		model.NewProduct(
+			"1",
+			"p1",
+			m1,
+			&m2),
+		model.NewProduct("2", "p2", m2, nil),
+	}, nil
 }

@@ -1,16 +1,18 @@
 package model
 
-import "OrderApp/common"
+import (
+	"OrderApp/common/class"
+)
 
 type Product struct {
 	id   string
 	name string
 
-	price     *common.Money
-	salePrice *common.Money
+	price     *class.Money
+	salePrice *class.Money
 }
 
-func NewProduct(id string, name string, price common.Money, salePrice *common.Money) *Product {
+func NewProduct(id string, name string, price class.Money, salePrice *class.Money) *Product {
 	return &Product{
 		id:        id,
 		name:      name,
@@ -19,7 +21,7 @@ func NewProduct(id string, name string, price common.Money, salePrice *common.Mo
 	}
 }
 
-func NewProductWithoutId(name string, price common.Money, salePrice *common.Money) *Product {
+func NewProductWithoutId(name string, price class.Money, salePrice *class.Money) *Product {
 	return &Product{
 		name:      name,
 		price:     &price,
@@ -27,17 +29,17 @@ func NewProductWithoutId(name string, price common.Money, salePrice *common.Mone
 	}
 }
 
-func (p *Product) GetFinalPrice() common.Money {
+func (p *Product) GetId() string { return p.id }
+
+func (p *Product) GetName() string { return p.name }
+
+func (p *Product) GetPrice() class.Money { return *p.price }
+
+func (p *Product) GetSalePrice() *class.Money { return p.salePrice }
+
+func (p *Product) GetFinalPrice() class.Money {
 	if p.salePrice != nil {
 		return *p.salePrice
 	}
 	return *p.price
-}
-
-func (p *Product) GetId() string {
-	return p.id
-}
-
-func (p *Product) GetName() string {
-	return p.name
 }

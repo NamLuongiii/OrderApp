@@ -7,10 +7,10 @@ import (
 )
 
 type CreateProductController struct {
-	CreateProductUseCase in.CreateProductUseCase
+	CreateProductUseCase in.CreateProductPort
 }
 
-func NewCreateProductController(createProductUseCase in.CreateProductUseCase) *CreateProductController {
+func NewCreateProductController(createProductUseCase in.CreateProductPort) *CreateProductController {
 	return &CreateProductController{
 		CreateProductUseCase: createProductUseCase,
 	}
