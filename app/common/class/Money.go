@@ -9,6 +9,7 @@ import (
 type Money interface {
 	Add(Money) Money
 	Subtract(Money) Money
+	Multiple(n float64) Money
 	IsPositive() bool
 	String() string
 	getAmount() decimal.Decimal
@@ -43,6 +44,10 @@ func (m moneyImpl) Add(other Money) Money {
 
 func (m moneyImpl) Subtract(other Money) Money {
 	return moneyImpl{amount: m.amount.Sub(other.getAmount())}
+}
+
+func (m moneyImpl) Multiple(n float64) Money {
+	return moneyImpl{amount: m.amount.Mul(decimal.NewFromFloat(n))}
 }
 
 func (m moneyImpl) IsPositive() bool {
