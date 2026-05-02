@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { CartItem } from '../interface/cart-item';
+import Money from "@/shared/class/money";
 
 interface CartState {
     items: CartItem[];
@@ -19,13 +20,16 @@ export const useCartStore = create<CartState>()(
                 const existingItem = currentItems.find((item) => item.id === newItem.id);
 
                 if (existingItem) {
-                    set({
-                        items: currentItems.map((item) =>
-                            item.id === newItem.id
-                                ? { ...item, quantity: item.quantity + newItem.quantity }
-                                : item
-                        ),
-                    });
+                    const newItems = currentItems;
+                    const existingItemIdx = newItems.findIndex((item) => item.id === newItem.id);
+                    const newQuantity = existingItem.quantity + newItem.quantity;
+
+                    newItems[existingItemIdx] = {
+                        ...existingItem,
+                        quantity: newQuantity,
+                        formattedTotal: new Money(existingItem.price).multiply(String(newQuantity)).format()
+                    }
+                    set({ items: newItems });
                 } else {
                     set({ items: [...currentItems, newItem] });
                 }

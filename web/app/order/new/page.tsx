@@ -1,6 +1,6 @@
 'use client'
 
-import { useCartStore } from "@/app/common/component/cart/store/store";
+import { useCartStore } from "@/components/cart/store/store";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";

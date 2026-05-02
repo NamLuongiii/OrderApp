@@ -1,6 +1,6 @@
 import {useMutation} from "@tanstack/react-query";
 import {CreateOrderCommand} from "@/app/order/new/interface/CreateOrderCommand";
-import axios from "@/app/common/axios";
+import axios from "@/shared/axios";
 
 export const useCreateOrder = () => {
     return useMutation({

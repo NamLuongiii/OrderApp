@@ -6,14 +6,12 @@ import {useRouter} from "next/navigation";
 export default function Search() {
     const router = useRouter();
     const [search, setSearch] = useState('')
-    const handleSearch = () => {
-        router.push(`/orders`)
-    }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
+            if (!search.trim()) return;
             e.preventDefault();
-            handleSearch();
+            router.push(`/order/${search.trim()}`)
         }
     }
 

@@ -1,4 +1,4 @@
-import {CartItem} from "@/app/common/component/cart/interface/cart-item";
+import {CartItem} from "@/components/cart/interface/cart-item";
 
 function getCartItem(): CartItem[] {
     return  [

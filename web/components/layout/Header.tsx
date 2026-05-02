@@ -1,4 +1,4 @@
-import Cart from "@/app/common/component/cart/Cart";
+import Cart from "@/components/cart/Cart";
 import Link from "next/link";
 
 export default function Header() {
