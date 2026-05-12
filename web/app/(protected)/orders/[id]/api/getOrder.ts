@@ -1,7 +1,7 @@
 import axios from "@/shared/axios";
-import Order from "@/app/(protected)/orders/interface/Order";
+import IOrderResponse from "@/app/(protected)/orders/interface/IOrderResponse";
 
 export default async function getOrder(id: string) {
-    const res = await axios.get<Order>(`/order/${id}`)
+    const res = await axios.get<IOrderResponse>(`/order/${id}`)
     return res.data
 }

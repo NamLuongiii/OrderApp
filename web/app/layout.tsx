@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Providers from "@/shared/provider/queryProvider";
+import {Suspense} from "react";
+import AppDialog from "@/components/app-dialog/AppDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +33,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+      <Suspense>
         <Providers>
           <div className='flex-1 bg-white p-4'>
             <Header />
             {children}
           </div>
         </Providers>
+        <AppDialog />
+      </Suspense>
       </body>
     </html>
   );

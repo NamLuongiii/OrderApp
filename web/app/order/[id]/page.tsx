@@ -1,9 +1,19 @@
 import getOrder from "@/app/order/[id]/api/getOrder";
 import {Input} from "@/components/ui/input";
+import Order from "@/app/order/[id]/interface/order";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const {id} = await params
-    const order = await getOrder(id)
+    let order = null
+    let error = null
+
+    try {
+        order = await getOrder(id)
+    } catch {
+        error = "Có lỗi xảy ra"
+    }
+
+    if (error || !order) return <div>{error}</div>
 
     return <div className='space-y-4'>
         <h1>Thông tin đơn hàng</h1>

@@ -17,4 +17,8 @@ export default class Money {
     format(): string {
         return new BigNumber(this.amount).toFormat({ suffix: 'đ' })
     }
+
+    toString(): string {
+        return this.amount
+    }
 }

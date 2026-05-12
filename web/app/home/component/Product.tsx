@@ -2,7 +2,8 @@
 import {Button} from "@/components/ui/button";
 import {useCartStore} from "@/components/cart/store/store";
 import IProduct from "@/app/home/interface/IProduct";
-import Money from "@/shared/class/money";
+import Image from "next/image"
+import cuteKidImage from "@/public/cute-kid.jpg"
 
 type Props = {
     product: IProduct
@@ -23,11 +24,17 @@ export default function Product({product}: Props) {
     }
 
     return (
-        <div key={product.id}>
-            <div>{product.name}</div>
-            {product.salePrice && <div className='text-sm line-through'>{product.formatedPrice}</div>}
-            <div>{product.formatedFinalPrice}</div>
-            <Button className='w-full' onClick={() => handleAddToCart(product)}>Add to cart</Button>
+        <div key={product.id} className='bg-white border shadow-md hover:shadow-lg flex flex-col'>
+            <Image src={cuteKidImage} alt="" />
+            <div className='p-4 flex-1'>
+                <div className='font-semibold'>{product.name}</div>
+                {product.salePrice && <div className='text-sm line-through'>{product.formatedPrice}</div>}
+                <div>{product.formatedFinalPrice}</div>
+            </div>
+            <Button
+                className='w-full rounded-none'
+                onClick={() => handleAddToCart(product)}>Thêm vào giỏ
+            </Button>
         </div>
     )
 }

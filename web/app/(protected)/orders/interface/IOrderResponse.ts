@@ -1,7 +1,7 @@
 import { Status } from "./status";
 
 
-export default interface Order {
+export default interface IOrderResponse {
     id: string;
     line_items: {
         product_id: string,
@@ -18,6 +18,6 @@ export default interface Order {
     email: string;
     note?: string;
     status: Status;
-    created_at: string;
-    updated_at: string;
+    created_at: number;
+    updated_at: number;
 }
