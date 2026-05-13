@@ -1,12 +1,12 @@
 package main
 
 import (
-	"OrderApp/auth"
 	"OrderApp/common/cors"
 	"OrderApp/common/postgresql"
-	"OrderApp/inventory"
-	"OrderApp/notification/gmail"
-	"OrderApp/order"
+	"OrderApp/service/auth"
+	"OrderApp/service/inventory"
+	"OrderApp/service/notification/gmail"
+	"OrderApp/service/order"
 
 	"github.com/gin-gonic/gin"
 )
