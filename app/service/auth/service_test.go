@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency/table"
 
 	"github.com/stretchr/testify/mock"
 )

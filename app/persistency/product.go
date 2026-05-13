@@ -1,13 +1,13 @@
 package persistency
 
 import (
-	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency/table"
 
 	"gorm.io/gorm"
 )
 
 type ProductPersistency interface {
-	SaveProduct(product table.Product) error
+	SaveProduct(product table.Product) (string, error)
 	GetProduct(id string) (*table.Product, error)
 	GetPaginatedProducts(page, size int) ([]*table.Product, error)
 	GetProductsByIDs(ids []string) ([]*table.Product, error)
@@ -20,9 +20,12 @@ func ProductAdapterImpl(db *gorm.DB) ProductPersistency {
 	return &ProductPersistencyImpl{db: db}
 }
 
-func (p *ProductPersistencyImpl) SaveProduct(product table.Product) error {
+func (p *ProductPersistencyImpl) SaveProduct(product table.Product) (string, error) {
 	e := p.db.Create(&product).Error
-	return e
+	if e != nil {
+		return "", e
+	}
+	return product.ID, nil
 }
 
 func (p *ProductPersistencyImpl) GetProduct(id string) (*table.Product, error) {

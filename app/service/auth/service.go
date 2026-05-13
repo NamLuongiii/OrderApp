@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"OrderApp/common/postgresql/table"
 	"OrderApp/persistency"
+	"OrderApp/persistency/table"
 )
 
 type Service interface {

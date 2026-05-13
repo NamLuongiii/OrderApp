@@ -1,6 +1,8 @@
 package auth
 
-import "OrderApp/common/postgresql/table"
+import (
+	"OrderApp/persistency/table"
+)
 
 func (a *ServiceImpl) CreateUser(dto CreateUserCommand) error {
 	user := table.User{

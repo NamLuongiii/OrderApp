@@ -1,7 +1,7 @@
 package postgresql
 
 import (
-	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency/table"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

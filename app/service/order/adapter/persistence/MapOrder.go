@@ -2,7 +2,7 @@ package persistence
 
 import (
 	"OrderApp/common/class"
-	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency/table"
 	model2 "OrderApp/service/order/application/domain/model"
 )
 

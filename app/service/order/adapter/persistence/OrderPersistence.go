@@ -1,7 +1,7 @@
 package persistence
 
 import (
-	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency/table"
 	model2 "OrderApp/service/order/application/domain/model"
 
 	"gorm.io/gorm"
