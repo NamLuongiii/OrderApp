@@ -27,13 +27,13 @@ func (c *GetOrderController) GetOrder(ctx *gin.Context) {
 
 	order, e := c.getOrderPort.GetOrder(orderId)
 	if e != nil {
-		ctx.JSON(500, gin.H{"error": "Failed to retrieve order"})
+		ctx.JSON(500, gin.H{"msg": "Failed to retrieve order"})
 		return
 	}
 
 	orderResponse, e := mapOrder(order)
 	if e != nil {
-		ctx.JSON(500, gin.H{"error": "Failed to map order"})
+		ctx.JSON(500, gin.H{"msg": "Failed to map order"})
 		return
 	}
 
@@ -45,17 +45,17 @@ func (c *GetOrderController) GetPaginatedOrders(ctx *gin.Context) {
 	limit := ctx.DefaultQuery("limit", "10")
 	intPage, err := strconv.Atoi(page)
 	if err != nil {
-		ctx.JSON(400, gin.H{"error": "Invalid page number"})
+		ctx.JSON(400, gin.H{"msg": "Invalid page number"})
 		return
 	}
 	intLimit, err := strconv.Atoi(limit)
 	if err != nil {
-		ctx.JSON(400, gin.H{"error": "Invalid limit number"})
+		ctx.JSON(400, gin.H{"msg": "Invalid limit number"})
 		return
 	}
 	orders, e := c.getOrderPort.GetPaginatedOrders(intPage, intLimit)
 	if e != nil {
-		ctx.JSON(500, gin.H{"error": "Failed to retrieve orders"})
+		ctx.JSON(500, gin.H{"msg": "Failed to retrieve orders"})
 		return
 	}
 
@@ -63,7 +63,7 @@ func (c *GetOrderController) GetPaginatedOrders(ctx *gin.Context) {
 	for i, order := range orders {
 		orderResponse, e := mapOrder(order)
 		if e != nil {
-			ctx.JSON(500, gin.H{"error": "Failed to map order"})
+			ctx.JSON(500, gin.H{"msg": "Failed to map order"})
 			return
 		}
 		orderResponses[i] = *orderResponse

@@ -1,12 +1,22 @@
 package auth
 
+import (
+	"OrderApp/common/postgresql/table"
+	"OrderApp/persistency"
+)
+
 type Service interface {
-	getUser() string
+	GetUser(id string) (*table.User, error)
+	CreateUser(dto CreateUserCommand) error
+	Login(email, password string) (string, error)
 }
 
 type ServiceImpl struct {
+	userPersistency persistency.UserPersistency
 }
 
-func NewService() Service {
-	return &ServiceImpl{}
+func NewService(userPersistency persistency.UserPersistency) Service {
+	return &ServiceImpl{
+		userPersistency: userPersistency,
+	}
 }

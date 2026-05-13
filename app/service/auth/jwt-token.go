@@ -1,4 +1,4 @@
-package model
+package auth
 
 import (
 	"errors"
@@ -13,7 +13,7 @@ type Token struct {
 	jwt.RegisteredClaims
 }
 
-func VerifyToken(tokenString string) (*Token, error) {
+func verifyToken(tokenString string) (*Token, error) {
 	secretKey := []byte("secret")
 
 	claims := &Token{}
@@ -36,7 +36,7 @@ func VerifyToken(tokenString string) (*Token, error) {
 	return nil, errors.New("invalid token")
 }
 
-func GenerateJwtToken(userId string, role Role) (string, error) {
+func generateJwtToken(userId string, role Role) (string, error) {
 	secretKey := []byte("secret")
 
 	claims := Token{

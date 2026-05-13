@@ -22,7 +22,7 @@ func (c *MarkOrderCompletedController) MarkOrderCompleted(ctx *gin.Context) {
 	orderId := ctx.Param("orderId")
 	err := c.markOrderCompletedPort.MarkOrderCompleted(orderId)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": "Failed to mark order completed"})
+		ctx.JSON(500, gin.H{"msg": "Failed to mark order completed"})
 		return
 	}
 	ctx.JSON(200, gin.H{"message": "Order completed successfully"})

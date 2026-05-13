@@ -36,7 +36,7 @@ func (c *MakeOrderController) MakeOrder(ctx *gin.Context) {
 
 	e := ctx.ShouldBindBodyWithJSON(&body)
 	if e != nil {
-		ctx.JSON(400, gin.H{"error": "Invalid request body"})
+		ctx.JSON(400, gin.H{"msg": "Invalid request body"})
 		return
 	}
 
@@ -53,14 +53,14 @@ func (c *MakeOrderController) MakeOrder(ctx *gin.Context) {
 	)
 
 	if e != nil {
-		ctx.JSON(400, gin.H{"error": e.Error()})
+		ctx.JSON(400, gin.H{"msg": e.Error()})
 		return
 	}
 
 	e = c.makeOrderPort.MakeOrder(*makeOrderCommand)
 
 	if e != nil {
-		ctx.JSON(500, gin.H{"error": e.Error()})
+		ctx.JSON(500, gin.H{"msg": e.Error()})
 		return
 	}
 

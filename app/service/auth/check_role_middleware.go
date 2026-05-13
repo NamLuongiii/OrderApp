@@ -1,7 +1,7 @@
-package usecase
+package auth
 
 import (
-	"OrderApp/service/auth/application/domain/model"
+	"OrderApp/common/msg"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,14 +18,14 @@ func (c *CheckRoleMiddleware) CheckRole() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
+			c.JSON(http.StatusUnauthorized, msg.InvalidToken)
 			c.Abort()
 			return
 		}
 
-		claims, err := model.VerifyToken(tokenString)
+		claims, err := verifyToken(tokenString)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
+			c.JSON(http.StatusUnauthorized, msg.InvalidToken)
 			c.Abort()
 			return
 		}

@@ -19,7 +19,7 @@ func Config() (*gomail.Dialer, map[string]*template.Template, error) {
 }
 
 func loadTemplates() (map[string]*template.Template, error) {
-	path := "notification/gmail/template/"
+	path := "service/notification/gmail/template/"
 	templateNames := []string{
 		"successfully_order_played",
 	}

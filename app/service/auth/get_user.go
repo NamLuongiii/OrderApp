@@ -1,5 +1,7 @@
 package auth
 
-func (a *ServiceImpl) getUser() string {
-	return "hello worlds"
+import "OrderApp/common/postgresql/table"
+
+func (a *ServiceImpl) GetUser(id string) (*table.User, error) {
+	return a.userPersistency.GetUser(id)
 }

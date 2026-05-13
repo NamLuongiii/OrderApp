@@ -1,4 +1,4 @@
-package model
+package auth
 
 type Role string
 

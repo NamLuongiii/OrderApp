@@ -3,10 +3,9 @@ package main
 import (
 	"OrderApp/common/cors"
 	"OrderApp/common/postgresql"
+	"OrderApp/controller"
+	"OrderApp/persistency"
 	"OrderApp/service/auth"
-	"OrderApp/service/inventory"
-	"OrderApp/service/notification/gmail"
-	"OrderApp/service/order"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,24 +17,14 @@ func main() {
 		return
 	}
 
-	mailService, e := gmail.NewMailService()
-	if e != nil {
-		panic(e)
-		return
-	}
-
 	r := gin.Default()
 
 	r.Use(cors.MiddlewareCors())
 
-	checkRolePort := auth.Boostrap(r, db)
-	inventoryPort := inventory.Boostrap(r, db, checkRolePort)
-	order.Boostrap(
-		r,
-		db,
-		inventoryPort,
-		mailService,
-	)
+	userPersistency := persistency.NewUserPersistence(db)
+	authService := auth.NewService(userPersistency)
+	authController := controller.NewAuthController(r, authService)
+	authController.Init()
 
 	e = r.Run(":8080")
 	if e != nil {
