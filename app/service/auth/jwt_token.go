@@ -13,16 +13,16 @@ type Token struct {
 	jwt.RegisteredClaims
 }
 
-func verifyToken(tokenString string) (*Token, error) {
-	secretKey := []byte("secret")
+const secretKey = "secret"
 
+func verifyToken(tokenString string) (*Token, error) {
 	claims := &Token{}
 
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
 		}
-		return secretKey, nil
+		return []byte(secretKey), nil
 	})
 
 	if err != nil {
@@ -37,8 +37,6 @@ func verifyToken(tokenString string) (*Token, error) {
 }
 
 func generateJwtToken(userId string, role Role) (string, error) {
-	secretKey := []byte("secret")
-
 	claims := Token{
 		userId,
 		role,
@@ -48,5 +46,5 @@ func generateJwtToken(userId string, role Role) (string, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(secretKey)
+	return token.SignedString([]byte(secretKey))
 }
