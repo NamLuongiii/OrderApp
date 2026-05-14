@@ -2,13 +2,12 @@ package persistency
 
 import (
 	"OrderApp/persistency/table"
-	"OrderApp/service/order/application/domain/model"
 
 	"gorm.io/gorm"
 )
 
 type LineItemPersistency interface {
-	SaveLineItems(orderId string, lineItems []model.LineItem) error
+	SaveLineItems(orderId string, lineItems []*table.LineItem) error
 }
 
 type LineItemPersistenceImpl struct {
@@ -19,6 +18,6 @@ func NewLineItemPersistence(db *gorm.DB) *LineItemPersistenceImpl {
 	return &LineItemPersistenceImpl{db: db}
 }
 
-func (p *LineItemPersistenceImpl) SaveLineItems(lineItems []table.LineItem) error {
+func (p *LineItemPersistenceImpl) SaveLineItems(lineItems []*table.LineItem) error {
 	return p.db.CreateInBatches(&lineItems, len(lineItems)).Error
 }

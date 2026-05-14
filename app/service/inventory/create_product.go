@@ -5,7 +5,7 @@ import (
 	"OrderApp/persistency/table"
 )
 
-func (s ServiceImpl) CreateProduct(command CreateProductCommand) (string, error) {
+func (s *ServiceImpl) CreateProduct(command CreateProductCommand) (string, error) {
 	var salePriceStr string
 	if command.SalePrice != nil {
 		salePriceStr = (*command.SalePrice).String()

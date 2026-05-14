@@ -16,7 +16,7 @@ type ServiceImpl struct {
 }
 
 func NewInventoryService(productPersistency persistency.ProductPersistency) Service {
-	return ServiceImpl{
+	return &ServiceImpl{
 		productPersistency: productPersistency,
 	}
 }
