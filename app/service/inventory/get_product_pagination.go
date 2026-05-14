@@ -1,10 +1,10 @@
 package inventory
 
 import (
+	"OrderApp/common/obj"
 	"OrderApp/persistency/table"
 )
 
-func (s *ServiceImpl) GetProductPagination(ids []string) (
-	products []*table.Product, page int, size int, pageNum int, error error) {
-	return nil, 0, 0, 0, nil
+func (s *ServiceImpl) GetProductPagination(page, size int) ([]*table.Product, *obj.Pagination, error) {
+	return s.productPersistency.GetPaginatedProducts(page, size)
 }

@@ -5,5 +5,5 @@ import (
 )
 
 func (s *ServiceImpl) GetProduct(id string) (*table.Product, error) {
-	return nil, nil
+	return s.productPersistency.GetProduct(id)
 }

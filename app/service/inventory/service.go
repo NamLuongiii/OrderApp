@@ -1,6 +1,7 @@
 package inventory
 
 import (
+	"OrderApp/common/obj"
 	"OrderApp/persistency"
 	"OrderApp/persistency/table"
 )
@@ -8,7 +9,7 @@ import (
 type Service interface {
 	CreateProduct(command CreateProductCommand) (string, error)
 	GetProduct(id string) (*table.Product, error)
-	GetProductPagination(ids []string) (products []*table.Product, page int, size int, pageNum int, error error)
+	GetProductPagination(page, size int) ([]*table.Product, *obj.Pagination, error)
 }
 
 type ServiceImpl struct {
