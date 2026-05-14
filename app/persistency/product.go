@@ -41,7 +41,12 @@ func (p *ProductPersistencyImpl) GetProduct(id string) (*table.Product, error) {
 
 func (p *ProductPersistencyImpl) GetPaginatedProducts(page, size int) ([]*table.Product, *obj.Pagination, error) {
 	var products []*table.Product
-	e := p.db.Limit(size).Offset((page - 1) * size).Find(&products).Error
+	e := p.db.
+		Limit(size).
+		Offset((page - 1) * size).
+		Find(&products).
+		Order("createdAt DESC").
+		Error
 	if e != nil {
 		return nil, nil, e
 	}

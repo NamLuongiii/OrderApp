@@ -1,6 +1,7 @@
 package table
 
 import (
+	"OrderApp/common/class"
 	"time"
 )
 
@@ -17,4 +18,12 @@ type LineItem struct {
 
 	// Relationship
 	Product *Product `json:"product,omitempty" gorm:"foreignKey:ProductID;references:ID"`
+}
+
+func (li *LineItem) CalculateTotal() string {
+	objPrice, e := class.NewMoney(li.Price)
+	if e != nil {
+		return ""
+	}
+	return objPrice.Multiple(float64(li.Quantity)).String()
 }

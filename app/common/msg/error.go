@@ -6,4 +6,5 @@ const (
 	PasswordTooSimple   = "password too simple"
 	UserNotFound        = "user not found"
 	InvalidToken        = "invalid token"
+	ProductNotFound     = "product not found"
 )
