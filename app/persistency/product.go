@@ -20,7 +20,7 @@ type ProductPersistencyImpl struct {
 	db *gorm.DB
 }
 
-func ProductAdapterImpl(db *gorm.DB) ProductPersistency {
+func NewProductPersistency(db *gorm.DB) ProductPersistency {
 	return &ProductPersistencyImpl{db: db}
 }
 

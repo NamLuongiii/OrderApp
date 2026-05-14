@@ -10,10 +10,10 @@ func (m *ServiceImpl) SendNewOrderPlayed(to string, command SendNewOrderPlayedCo
 
 type ProductData struct {
 	ID          string
-	Quantity    int
+	Quantity    int64
 	ProductName string
-	Price       string
-	Total       string
+	Price       int64
+	Total       int64
 }
 
 type SendNewOrderPlayedCommand struct {

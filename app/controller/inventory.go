@@ -11,13 +11,15 @@ import (
 
 type InventoryController struct {
 	service inventory.Service
+	r       *gin.Engine
 }
 
-func NewInventoryController(service inventory.Service) *InventoryController {
-	return &InventoryController{service: service}
+func NewInventoryController(r *gin.Engine, service inventory.Service) *InventoryController {
+	return &InventoryController{r: r, service: service}
 }
 
-func (c *InventoryController) Init(r *gin.Engine) {
+func (c *InventoryController) Init() {
+	r := c.r
 	g := r.Group("v1")
 	g.GET("/product/:id", c.GetProduct)
 	g.GET("/products", c.GetProductPagination)

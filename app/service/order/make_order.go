@@ -1,56 +1,94 @@
 package order
 
-import "OrderApp/persistency/table"
+import (
+	"OrderApp/common/class"
+	"OrderApp/common/msg"
+	"OrderApp/persistency/table"
+	"OrderApp/service/mail"
+	"errors"
+	"math"
 
-func (i ServiceImpl) MakeOrder(command MakeOrderCommand) (string, error) {
+	"github.com/shopspring/decimal"
+)
+
+func (s ServiceImpl) MakeOrder(command MakeOrderCommand) (string, error) {
 	numberOfProducts := len(command.Products)
 	extractIds := make([]string, numberOfProducts)
 	for i, product := range command.Products {
 		extractIds[i] = product.ID
 	}
 
-	products, e := i.productPersistency.GetProductsByIDs(extractIds)
+	products, e := s.productPersistency.GetProductsByIDs(extractIds)
 	if e != nil {
 		return "", e
 	}
 
-	var orderTotal int64 = 0
+	var orderTotal decimal.Decimal = decimal.Zero
+	maxSafeValue := decimal.NewFromInt(math.MaxInt64)
+
 	for i, product := range products {
 		quantity := command.Products[i].Quantity
-		itemTotal := product.GetFinalPrice() * quantity
-		orderTotal += itemTotal
+		orderTotal := decimal.NewFromInt(product.GetFinalPrice()).Mul(decimal.NewFromInt(quantity))
+		if orderTotal.GreaterThanOrEqual(maxSafeValue) {
+			return "", errors.New(msg.PriceValueTooLarge)
+		}
+		orderTotal = orderTotal.Add(orderTotal)
+	}
+
+	if orderTotal.GreaterThan(maxSafeValue) {
+		return "", errors.New(msg.PriceValueTooLarge)
 	}
 
 	var order = table.Order{
 		Name:    command.Customer.Name,
-		Total:   orderTotal,
+		Total:   orderTotal.IntPart(),
 		Email:   command.Customer.Email,
 		Phone:   command.Customer.Phone,
 		Address: command.Customer.Address,
 		Note:    command.Customer.Note,
-		Status:  string(StatusPending),
+		Status:  string(class.StatusPending),
 	}
-	orderId, e := i.orderPersistency.SaveOrder(order)
+	orderId, e := s.orderPersistency.SaveOrder(order)
 	if e != nil {
 		return "", e
 	}
 
 	lineItems := make([]*table.LineItem, numberOfProducts)
 	for i, _ := range lineItems {
+		itemTotal := decimal.NewFromInt(products[i].GetFinalPrice()).Mul(decimal.NewFromInt(command.Products[i].Quantity))
+		if itemTotal.GreaterThan(maxSafeValue) {
+			return "", errors.New(msg.PriceValueTooLarge)
+		}
+
 		lineItems[i] = &table.LineItem{
 			OrderID:     orderId,
 			ProductID:   products[i].ID,
 			Quantity:    command.Products[i].Quantity,
 			Price:       products[i].GetFinalPrice(),
-			Total:       products[i].GetFinalPrice() * command.Products[i].Quantity,
+			Total:       itemTotal.IntPart(),
 			ProductName: products[i].Name,
 		}
 	}
 
-	e = i.lineItemPersistency.SaveLineItems(lineItems)
+	e = s.lineItemPersistency.SaveLineItems(lineItems)
 	if e != nil {
 		return "", e
 	}
+
+	mailProducts := make([]mail.ProductData, numberOfProducts)
+	for i, _ := range mailProducts {
+		mailProducts[i] = mail.ProductData{
+			ID:          products[i].ID,
+			Quantity:    command.Products[i].Quantity,
+			Price:       products[i].GetFinalPrice(),
+			ProductName: products[i].Name,
+			Total:       lineItems[i].Total,
+		}
+	}
+	go s.mailService.SendNewOrderPlayed(order.Email, mail.SendNewOrderPlayedCommand{
+		OrderID:  orderId,
+		Products: mailProducts,
+	})
 
 	return orderId, nil
 }

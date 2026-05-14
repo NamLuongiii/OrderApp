@@ -8,4 +8,5 @@ const (
 	InvalidToken        = "invalid token"
 	ProductNotFound     = "product not found"
 	PriceValueTooLarge  = "price value too large"
+	InvalidOrderStatus  = "invalid order status"
 )

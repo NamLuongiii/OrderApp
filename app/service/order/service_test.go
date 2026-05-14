@@ -3,6 +3,7 @@ package order
 import (
 	"OrderApp/common/obj"
 	"OrderApp/persistency/table"
+	"OrderApp/service/mail"
 
 	"github.com/stretchr/testify/mock"
 )
@@ -16,6 +17,26 @@ type MockOrderPersistency struct {
 	mock.Mock
 }
 
+func (m *MockOrderPersistency) ConfirmOrder(orderId string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m *MockOrderPersistency) CancelOrder(orderId string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m *MockOrderPersistency) MarkOrderAsDelivered(orderId string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m *MockOrderPersistency) MarkOrderAsCompleted(orderId string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (m *MockOrderPersistency) SaveOrder(order table.Order) (string, error) {
 	args := m.Called(order)
 	return args.String(0), args.Error(1)
@@ -26,9 +47,9 @@ func (m *MockOrderPersistency) GetOrder(id string) (*table.Order, error) {
 	return args.Get(0).(*table.Order), args.Error(1)
 }
 
-func (m *MockOrderPersistency) GetPaginatedOrders(page, limit int) ([]*table.Order, error) {
+func (m *MockOrderPersistency) GetPaginatedOrders(page, limit int) ([]*table.Order, *obj.Pagination, error) {
 	args := m.Called(page, limit)
-	return args.Get(0).([]*table.Order), args.Error(1)
+	return args.Get(0).([]*table.Order), args.Get(1).(*obj.Pagination), args.Error(2)
 }
 
 func (m *MockOrderPersistency) UpdateOrderStatus(orderId string, status string) error {
@@ -80,3 +101,9 @@ func (m *MockProductPersistency) GetProductsByIDs(ids []string) ([]*table.Produc
 	args := m.Called(ids)
 	return args.Get(0).([]*table.Product), args.Error(1)
 }
+
+type MockMailService struct {
+	mock.Mock
+}
+
+func (m *MockMailService) SendNewOrderPlayed(to string, data mail.SendNewOrderPlayedCommand) {}

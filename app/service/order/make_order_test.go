@@ -1,8 +1,8 @@
 package order
 
 import (
+	"OrderApp/common/msg"
 	"OrderApp/persistency/table"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,15 +14,7 @@ func TestMakeOrder_OverflowProof(t *testing.T) {
 	mockOrderPersistency := new(MockOrderPersistency)
 	mockLineItemPersistency := new(MockLineItemPersistency)
 	mockProductPersistency := new(MockProductPersistency)
-
-	// Biến để hứng giá trị Total thực tế mà Service tính toán được
-	var actualTotalInRepo int64
-
-	// Mock SaveOrder: Sử dụng MatchedBy để capture lại giá trị Total bị sai
-	mockOrderPersistency.On("SaveOrder", mock.MatchedBy(func(o table.Order) bool {
-		actualTotalInRepo = o.Total
-		return o.Name == "name_test"
-	})).Return("order_123", nil)
+	mockMailService := new(MockMailService)
 
 	// Mock SaveLineItems: Chấp nhận bất kỳ mảng LineItems nào
 	mockLineItemPersistency.On("SaveLineItems", mock.Anything).Return(nil)
@@ -60,23 +52,16 @@ func TestMakeOrder_OverflowProof(t *testing.T) {
 	}
 
 	// 3. Thực thi Service
-	service := NewService(mockOrderPersistency, mockLineItemPersistency, mockProductPersistency)
-	orderId, e := service.MakeOrder(command)
+	service := NewService(
+		mockOrderPersistency,
+		mockLineItemPersistency,
+		mockProductPersistency,
+		mockMailService,
+	)
+	_, e := service.MakeOrder(command)
 
 	// 4. Assertions
-	assert.NoError(t, e)
-	assert.Equal(t, "order_123", orderId)
-
-	// CHỈ RA TOTAL ORDER KHÔNG ĐÚNG:
-	// Giá trị kỳ vọng toán học: (100 tỷ * 100 tỷ) + (200 tỷ * 100 tỷ) = 30,000,000,000,000,000,000,000
-	// Con số này vượt xa MaxInt64 (9,223,372,036,854,775,807)
-
-	// Khẳng định giá trị nhận được bị sai lệch (khác với 0 và khác với một con số nhỏ hợp lý)
-	assert.Equal(t, int64(5594136148269072384), actualTotalInRepo, "Total bị overflow dẫn đến con số sai lệch")
-
-	fmt.Printf("--- Kết quả Test ---\n")
-	fmt.Printf("Total nhận được trong Repo: %v\n", actualTotalInRepo)
-	fmt.Printf("--------------------\n")
+	assert.Equal(t, e.Error(), msg.PriceValueTooLarge)
 
 	mockOrderPersistency.AssertExpectations(t)
 }
