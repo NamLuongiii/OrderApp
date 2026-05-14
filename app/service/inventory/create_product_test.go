@@ -1,7 +1,6 @@
 package inventory
 
 import (
-	"OrderApp/common/class"
 	"OrderApp/persistency/table"
 	"testing"
 
@@ -10,32 +9,18 @@ import (
 
 func TestCreateProduct(t *testing.T) {
 	mockProductRepository := new(MockProductRepository)
-	price, e := class.NewMoney("-1")
-	if e != nil {
-		panic(e)
-		return
-	}
 
-	salePrice, e := class.NewMoney("0")
-	if e != nil {
-		panic(e)
-		return
-	}
 	command := CreateProductCommand{
 		Name:      "test",
-		Price:     price,
-		SalePrice: &salePrice,
+		Price:     1,
+		SalePrice: -1,
 	}
 
-	var salePriceStr string
-	if command.SalePrice != nil {
-		salePriceStr = (*command.SalePrice).String()
-	}
-
+	var salePrice int64 = -1
 	product := table.Product{
 		Name:      command.Name,
-		Price:     command.Price.String(),
-		SalePrice: &salePriceStr,
+		Price:     1,
+		SalePrice: &salePrice,
 	}
 	mockProductRepository.On("SaveProduct", product).Return("1", nil)
 
@@ -44,4 +29,5 @@ func TestCreateProduct(t *testing.T) {
 
 	assert.NoError(t, e)
 	assert.Equal(t, "1", id)
+	assert.NotEqual(t, "-1", product.GetFinalPrice())
 }

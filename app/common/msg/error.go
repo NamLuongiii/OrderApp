@@ -7,4 +7,5 @@ const (
 	UserNotFound        = "user not found"
 	InvalidToken        = "invalid token"
 	ProductNotFound     = "product not found"
+	PriceValueTooLarge  = "price value too large"
 )

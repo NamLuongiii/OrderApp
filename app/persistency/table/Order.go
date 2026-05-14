@@ -4,7 +4,7 @@ import "time"
 
 type Order struct {
 	ID        string    `json:"id" gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
-	Total     string    `json:"total" gorm:"not null"`
+	Total     int64     `json:"total" gorm:"not null"`
 	Name      string    `json:"name" gorm:"type:varchar(255);not null"`
 	Email     string    `json:"email" gorm:"type:varchar(255)"`
 	Phone     string    `json:"phone" gorm:"type:varchar(50)"`

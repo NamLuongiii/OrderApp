@@ -1,20 +1,15 @@
 package inventory
 
 import (
-	"OrderApp/common/class"
 	"OrderApp/persistency/table"
 )
 
 func (s *ServiceImpl) CreateProduct(command CreateProductCommand) (string, error) {
-	var salePriceStr string
-	if command.SalePrice != nil {
-		salePriceStr = (*command.SalePrice).String()
-	}
 
 	product := table.Product{
 		Name:      command.Name,
-		Price:     command.Price.String(),
-		SalePrice: &salePriceStr,
+		Price:     command.Price,
+		SalePrice: &command.SalePrice,
 	}
 
 	id, e := s.productPersistency.SaveProduct(product)
@@ -30,6 +25,6 @@ func (s *ServiceImpl) CreateProduct(command CreateProductCommand) (string, error
 
 type CreateProductCommand struct {
 	Name      string
-	Price     class.Money
-	SalePrice *class.Money
+	Price     int64
+	SalePrice int64
 }

@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"OrderApp/common/class"
 	"OrderApp/common/msg"
 	"OrderApp/service/inventory"
 	"net/http"
@@ -100,20 +99,10 @@ func (c *InventoryController) CreateProduct(ctx *gin.Context) {
 		return
 	}
 
-	price, e := class.NewPositiveMoney(request.Price)
-	if e != nil {
-		ctx.JSON(http.StatusBadRequest, e.Error())
-	}
-
-	salePrice, e := class.NewPositiveMoney(request.SalePrice)
-	if e != nil {
-		ctx.JSON(http.StatusBadRequest, e.Error())
-	}
-
 	id, e := c.service.CreateProduct(inventory.CreateProductCommand{
 		Name:      request.Name,
-		Price:     price,
-		SalePrice: &salePrice,
+		Price:     request.Price,
+		SalePrice: request.SalePrice,
 	})
 
 	if e != nil {
@@ -127,13 +116,13 @@ func (c *InventoryController) CreateProduct(ctx *gin.Context) {
 type ProductResponse struct {
 	ID         string `json:"id"`
 	Name       string `json:"name"`
-	Price      string `json:"price"`
-	SalePrice  string `json:"salePrice"`
-	FinalPrice string `json:"finalPrice"`
+	Price      int64  `json:"price"`
+	SalePrice  int64  `json:"salePrice"`
+	FinalPrice int64  `json:"finalPrice"`
 }
 
 type CreateProductRequest struct {
 	Name      string `json:"name"`
-	Price     string `json:"price"`
-	SalePrice string `json:"salePrice"`
+	Price     int64  `json:"price"`
+	SalePrice int64  `json:"salePrice"`
 }
