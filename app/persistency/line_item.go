@@ -7,7 +7,7 @@ import (
 )
 
 type LineItemPersistency interface {
-	SaveLineItems(orderId string, lineItems []*table.LineItem) error
+	SaveLineItems(lineItems []*table.LineItem) error
 }
 
 type LineItemPersistenceImpl struct {

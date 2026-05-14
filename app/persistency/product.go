@@ -1,7 +1,9 @@
 package persistency
 
 import (
+	"OrderApp/common/msg"
 	"OrderApp/persistency/table"
+	"errors"
 
 	"gorm.io/gorm"
 
@@ -71,5 +73,30 @@ func (p *ProductPersistencyImpl) GetProductsByIDs(ids []string) ([]*table.Produc
 	if e != nil {
 		return nil, e
 	}
-	return products, nil
+
+	isIdNotFound := len(products) != len(ids)
+	if isIdNotFound {
+		return nil, errors.New(msg.ProductNotFound)
+	}
+
+	// restore product order
+	findById := func(id string, products []*table.Product) (*table.Product, error) {
+		for _, prod := range products {
+			if prod.ID == id {
+				return prod, nil
+			}
+		}
+		return nil, errors.New(msg.ProductNotFound)
+	}
+
+	restoredProducts := make([]*table.Product, len(ids))
+	for i, _ := range restoredProducts {
+		prod, e := findById(ids[i], products)
+		if e != nil {
+			return nil, e
+		}
+		restoredProducts[i] = prod
+	}
+
+	return restoredProducts, nil
 }
