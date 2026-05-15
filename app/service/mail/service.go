@@ -2,6 +2,7 @@ package mail
 
 import (
 	"bytes"
+	"embed"
 	"html/template"
 
 	"gopkg.in/gomail.v2"
@@ -54,6 +55,9 @@ func (s *ServiceImpl) sendGMail(to string, subject string, template string, data
 	}
 }
 
+//go:embed template/*.html
+var templateFS embed.FS
+
 func loadTemplates() (map[string]*template.Template, error) {
 	templateNames := []string{
 		"template/send_new_order_played.html",
@@ -61,7 +65,11 @@ func loadTemplates() (map[string]*template.Template, error) {
 
 	templates := make(map[string]*template.Template, len(templateNames))
 	for _, name := range templateNames {
-		templates[name] = template.Must(template.ParseFiles(name))
+		t, err := template.ParseFS(templateFS, name)
+		if err != nil {
+			return nil, err
+		}
+		templates[name] = t
 	}
 	return templates, nil
 }

@@ -73,9 +73,8 @@ func (m *MockLineItemPersistency) SaveLineItems(lineItems []*table.LineItem) err
 
 // ////////////////////////////////////////
 //
-//	Mock Product            //
-//	Persistency layer        //
-//	                //
+//	Mock Product
+//	Persistency layer
 //
 // ////////////////////////////////////////
 type MockProductPersistency struct {
@@ -102,6 +101,11 @@ func (m *MockProductPersistency) GetProductsByIDs(ids []string) ([]*table.Produc
 	return args.Get(0).([]*table.Product), args.Error(1)
 }
 
+// ////////////////////////////////////////
+//
+//	Mock Mail Service
+//
+// ////////////////////////////////////////
 type MockMailService struct {
 	mock.Mock
 }
