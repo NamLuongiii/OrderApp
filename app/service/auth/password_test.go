@@ -13,6 +13,11 @@ func TestHashPassword(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEqual(t, pass, hash)
 
-	v := validatePassword(pass, hash)
+	v := checkPasswordCorrect(pass, hash)
 	assert.True(t, v)
+
+	p2 := "12345"
+	hash2 := "$2a$10$hZsyprqgAlc5eQFSGSnOT.knP73lgV2mUwKAWtdrq7vzZHCHRuk.u"
+	v2 := checkPasswordCorrect(p2, hash2)
+	assert.True(t, v2)
 }

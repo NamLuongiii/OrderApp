@@ -21,13 +21,13 @@ func NewAuthController(r *gin.Engine, service auth.Service) *AuthController {
 func (a *AuthController) Init() {
 	r := a.r
 	g := r.Group("v1")
-	g.GET("/user/:id", a.getUser)
+	g.GET("/me", auth.CheckRole(), a.getUser)
 	g.POST("/user", a.createUser)
 	g.POST("/login", a.login)
 }
 
 func (a *AuthController) getUser(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.GetString("userId")
 	user, e := a.authService.GetUser(id)
 
 	if e != nil {
@@ -55,9 +55,10 @@ func (a *AuthController) createUser(ctx *gin.Context) {
 		return
 	}
 	command := auth.CreateUserCommand{
-		Name:  createUserRequest.Name,
-		Email: createUserRequest.Email,
-		Role:  string(createUserRequest.Role),
+		Name:     createUserRequest.Name,
+		Email:    createUserRequest.Email,
+		Role:     string(createUserRequest.Role),
+		Password: createUserRequest.Password,
 	}
 	e = a.authService.CreateUser(command)
 	if e != nil {

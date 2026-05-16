@@ -13,10 +13,10 @@ const api = axios.create({
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        const isClient = !!window
-        if (isClient) {
-            alert(error.message)
-        }
+        // const isClient = !!window
+        // if (isClient) {
+        //     alert(error.message)
+        // }
         return Promise.reject(error);
     }
 );

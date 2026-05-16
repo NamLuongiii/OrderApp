@@ -7,14 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CheckRoleMiddleware struct {
-}
-
-func NewCheckRoleMiddleware() *CheckRoleMiddleware {
-	return &CheckRoleMiddleware{}
-}
-
-func (c *CheckRoleMiddleware) CheckRole() gin.HandlerFunc {
+func CheckRole() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {

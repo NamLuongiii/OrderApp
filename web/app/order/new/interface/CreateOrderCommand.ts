@@ -1,11 +1,13 @@
 export interface CreateOrderCommand {
-    products: {
-        product_id: string;
+    items: {
+        productId: string;
         quantity: number;
     }[];
-    name: string;
-    phone: string;
-    address: string;
-    email: string;
-    note?: string;
+    customer: {
+        name: string;
+        phone: string;
+        address: string;
+        email: string;
+        note?: string;
+    }
 }

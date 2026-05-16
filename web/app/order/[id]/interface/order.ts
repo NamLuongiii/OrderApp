@@ -2,21 +2,21 @@ import {Status} from "@/app/order/[id]/interface/status";
 
 export default interface Order {
     id: string;
-    line_items: {
-        product_id: string,
+    items: {
+        productID: string,
         quantity: number,
         price: string,
         total: string,
-        id: string,
-        product_name: string,
+        itemID: string,
+        name: string,
     }[];
-    total: string;
+    total: number;
     name: string;
     phone: string;
     address: string;
     email: string;
     note?: string;
     status: Status;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
 }

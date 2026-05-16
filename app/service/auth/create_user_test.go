@@ -1,25 +1,17 @@
 package auth
 
 import (
-	"OrderApp/persistency/table"
 	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func TestCreateUser(t *testing.T) {
 	mockUser := new(MockUserPersistency)
-
-	user := table.User{
-		Name:     "test",
-		Role:     "admin",
-		Email:    "",
-		Password: "",
-	}
-
 	expectedError := errors.New("email is required")
-	mockUser.On("CreateUser", user).Return(expectedError)
+	mockUser.On("CreateUser", mock.Anything).Return(expectedError)
 
 	service := NewService(mockUser)
 
@@ -27,7 +19,7 @@ func TestCreateUser(t *testing.T) {
 		Name:     "test",
 		Role:     "admin",
 		Email:    "",
-		Password: "",
+		Password: "password",
 	}
 	err := service.CreateUser(command)
 

@@ -4,7 +4,7 @@ func (m *ServiceImpl) SendNewOrderPlayed(to string, command SendNewOrderPlayedCo
 	m.sendGMail(
 		to,
 		"Order Updated",
-		"successfully_order_played",
+		"template/send_new_order_played.html",
 		command)
 }
 

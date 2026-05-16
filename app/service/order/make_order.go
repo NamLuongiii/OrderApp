@@ -28,11 +28,11 @@ func (s ServiceImpl) MakeOrder(command MakeOrderCommand) (string, error) {
 
 	for i, product := range products {
 		quantity := command.Products[i].Quantity
-		orderTotal := decimal.NewFromInt(product.GetFinalPrice()).Mul(decimal.NewFromInt(quantity))
-		if orderTotal.GreaterThanOrEqual(maxSafeValue) {
+		itemTotal := decimal.NewFromInt(product.GetFinalPrice()).Mul(decimal.NewFromInt(quantity))
+		if itemTotal.GreaterThanOrEqual(maxSafeValue) {
 			return "", errors.New(msg.PriceValueTooLarge)
 		}
-		orderTotal = orderTotal.Add(orderTotal)
+		orderTotal = orderTotal.Add(itemTotal)
 	}
 
 	if orderTotal.GreaterThan(maxSafeValue) {

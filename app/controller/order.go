@@ -59,30 +59,35 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 
 func (c *OrderController) GetOrder(ctx *gin.Context) {
 	id := ctx.Param("id")
-	table_order, e := c.orderService.GetOrder(id)
+	tableOrder, e := c.orderService.GetOrder(id)
 	if e != nil {
 		ctx.JSON(http.StatusBadRequest, e.Error())
 		return
 	}
 
-	itemResponse := make([]ItemResponse, len(table_order.LineItems))
-	for i, item := range table_order.LineItems {
+	itemResponse := make([]ItemResponse, len(tableOrder.LineItems))
+	for i, item := range tableOrder.LineItems {
 		itemResponse[i] = ItemResponse{
 			ID:        item.ID,
 			Quantity:  item.Quantity,
 			Price:     item.Price,
 			Total:     item.Total,
 			Name:      item.ProductName,
-			ProductID: item.Product.ID,
+			ProductID: item.ProductID,
 		}
 	}
 	response := OrderResponse{
-		ID:        table_order.ID,
-		Total:     table_order.Total,
-		CreatedAt: table_order.CreatedAt.String(),
-		UpdatedAt: table_order.UpdatedAt.String(),
-		Status:    table_order.Status,
+		ID:        tableOrder.ID,
+		Total:     tableOrder.Total,
+		CreatedAt: tableOrder.CreatedAt.String(),
+		UpdatedAt: tableOrder.UpdatedAt.String(),
+		Status:    tableOrder.Status,
 		Items:     itemResponse,
+		Name:      tableOrder.Name,
+		Email:     tableOrder.Email,
+		Phone:     tableOrder.Phone,
+		Address:   tableOrder.Address,
+		Note:      tableOrder.Note,
 	}
 
 	ctx.JSON(http.StatusOK, response)
@@ -180,6 +185,11 @@ type OrderResponse struct {
 	Status    string `json:"status"`
 	CreatedAt string `json:"createdAt"`
 	UpdatedAt string `json:"updatedAt"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	Note      string `json:"note"`
 
 	Items []ItemResponse `json:"items"`
 }

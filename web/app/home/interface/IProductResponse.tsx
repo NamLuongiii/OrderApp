@@ -1,7 +1,14 @@
 export default  interface IProductResponse {
-    id: string;
-    name: string;
-    price: string;
-    salePrice?: string;
-    finalPrice: string;
+    pagination: {
+        Page: number;
+        PageSize: number;
+        PageNums: number
+    },
+    products?: {
+        id: string;
+        name: string;
+        price: string;
+        salePrice?: string;
+        finalPrice: string;
+    }[]
 }

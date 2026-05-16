@@ -3,6 +3,7 @@ package mail
 import (
 	"bytes"
 	"embed"
+	"fmt"
 	"html/template"
 
 	"gopkg.in/gomail.v2"
@@ -38,7 +39,8 @@ func NewMailService() (Service, error) {
 func (s *ServiceImpl) sendGMail(to string, subject string, template string, data interface{}) {
 	tmpl := s.templates[template]
 	if tmpl == nil {
-		panic("template not found: " + template)
+		fmt.Print("template not found: " + template)
+		return
 	}
 	var body bytes.Buffer
 	if e := tmpl.Execute(&body, data); e != nil {

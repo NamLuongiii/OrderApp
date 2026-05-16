@@ -14,8 +14,7 @@ func TestCheckRoleMiddleware_NoToken(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, r := gin.CreateTestContext(w)
 
-	middleware := NewCheckRoleMiddleware()
-	r.GET("/test", middleware.CheckRole(), func(c *gin.Context) {
+	r.GET("/test", CheckRole(), func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "success"})
 	})
 
@@ -30,8 +29,7 @@ func TestCheckRoleMiddleware_InvalidToken(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, r := gin.CreateTestContext(w)
 
-	middleware := NewCheckRoleMiddleware()
-	r.GET("/test", middleware.CheckRole(), func(c *gin.Context) {
+	r.GET("/test", CheckRole(), func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "success"})
 	})
 
@@ -51,8 +49,7 @@ func TestCheckRoleMiddleware_ValidToken(t *testing.T) {
 	token, err := generateJwtToken("user123", RoleAdmin)
 	assert.NoError(t, err)
 
-	middleware := NewCheckRoleMiddleware()
-	r.GET("/test", middleware.CheckRole(), func(c *gin.Context) {
+	r.GET("/test", CheckRole(), func(c *gin.Context) {
 		userId, exists := c.Get("userId")
 		assert.True(t, exists)
 		assert.Equal(t, "user123", userId)

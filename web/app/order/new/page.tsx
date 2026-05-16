@@ -35,15 +35,17 @@ export default function CheckoutPage() {
 
     const onSubmit = async (data: CheckoutFormData) => {
         const orderPayload: CreateOrderCommand = {
-            products: cartItems.map(item => ({
-                product_id: item.id,
+            items: cartItems.map(item => ({
+                productId: item.id,
                 quantity: item.quantity
             })),
-            name: data.customerName,
-            email: data.email,
-            phone: data.phone,
-            address: data.address,
-            note: data.note,
+            customer: {
+                name: data.customerName,
+                email: data.email,
+                phone: data.phone,
+                address: data.address,
+                note: data.note,
+            }
         };
 
         try {
@@ -52,7 +54,7 @@ export default function CheckoutPage() {
             showDialog({
                 message: 'Đặt hàng thành công',
                 onClose: () => {
-                    router.push(`/router/${orderId}`)
+                    router.push(`/order/${orderId}`)
                     clearCart(); // Xóa giỏ hàng sau khi mua
                 }
             })

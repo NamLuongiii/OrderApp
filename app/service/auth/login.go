@@ -6,15 +6,11 @@ import (
 )
 
 func (a *ServiceImpl) Login(email, password string) (string, error) {
-	hash, e := hashPassword(password)
-	if e != nil {
-		return "", errors.New(msg.InternalServerError)
-	}
 	user, e := a.userPersistency.GetUserByEmail(email)
 	if e != nil {
 		return "", errors.New(msg.InvalidCredentials)
 	}
-	if user.Password != hash {
+	if !checkPasswordCorrect(password, user.Password) {
 		return "", errors.New(msg.InvalidCredentials)
 	}
 	token, e := generateJwtToken(user.ID, Role(user.Role))

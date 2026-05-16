@@ -5,11 +5,16 @@ import (
 )
 
 func (a *ServiceImpl) CreateUser(dto CreateUserCommand) error {
+	hash, e := hashPassword(dto.Password)
+	if e != nil {
+		return e
+	}
+
 	user := table.User{
 		Name:     dto.Name,
 		Role:     dto.Role,
 		Email:    dto.Email,
-		Password: dto.Password,
+		Password: hash,
 	}
 	return a.userPersistency.CreateUser(user)
 }

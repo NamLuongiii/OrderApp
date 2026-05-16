@@ -8,10 +8,27 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: orderapp
+    # port 5432 bên dưới có thể ẩn (bỏ phần ports) nếu không muốn bên ngoài truy cập trực tiếp vào DB,
+    # các container trong cùng mạng vẫn kết nối được với nhau.
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: orderapp-backend
+    ports:
+      - "8080:8080" # Map port của VPS ra ngoài (Ví dụ app chạy port 8080)
+    environment:
+      - DB_HOST=postgres # Ăn theo tên service ở trên
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=orderapp
+    depends_on:
+      - postgres
     restart: unless-stopped
 
 volumes:

@@ -18,10 +18,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     return <div className='space-y-4'>
         <h1>Thông tin đơn hàng</h1>
         <div className='space-y-2'>
-            {order.line_items.map(lineItem => (
-                <div key={lineItem.id}>
+            {order.items.map(lineItem => (
+                <div key={lineItem.itemID}>
                     <div>
-                        {lineItem.product_name}
+                        {lineItem.name}
                         {lineItem.quantity}
                         {lineItem.price}
                         {lineItem.total}
