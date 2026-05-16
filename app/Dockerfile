@@ -1,17 +1,8 @@
-# Stage 1: Build
-FROM golang:1.25-alpine AS builder
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
-
-# Stage 2: Run
 FROM alpine:latest
 WORKDIR /app
-COPY --from=builder /app/main .
-# Nếu app của bạn cần file .env hoặc thư mục config, hãy copy vào đây
-# COPY --from=builder /app/.env .
-
+COPY main .
+# Nếu có file .env hoặc thư mục config thì copy kèm vào
+# COPY .env .
 EXPOSE 8080
 CMD ["./main"]
+# RUN CGO_ENABLED=0 GOOS=linux go build -p 1 -o main .
