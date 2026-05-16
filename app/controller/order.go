@@ -145,7 +145,7 @@ func (c *OrderController) GetOrderPagination(ctx *gin.Context) {
 				Price:     item.Price,
 				Total:     item.Total,
 				Name:      item.ProductName,
-				ProductID: item.Product.ID,
+				ProductID: item.ID,
 			}
 		}
 	}
