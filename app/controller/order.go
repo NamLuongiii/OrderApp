@@ -148,6 +148,19 @@ func (c *OrderController) GetOrderPagination(ctx *gin.Context) {
 				ProductID: item.ID,
 			}
 		}
+		response = append(response, OrderResponse{
+			ID:        tableOrder.ID,
+			Total:     tableOrder.Total,
+			CreatedAt: tableOrder.CreatedAt.String(),
+			UpdatedAt: tableOrder.UpdatedAt.String(),
+			Status:    tableOrder.Status,
+			Items:     itemResponse,
+			Name:      tableOrder.Name,
+			Email:     tableOrder.Email,
+			Phone:     tableOrder.Phone,
+			Address:   tableOrder.Address,
+			Note:      tableOrder.Note,
+		})
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"orders":     response,
