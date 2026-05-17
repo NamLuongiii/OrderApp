@@ -12,14 +12,6 @@ export default async function OrdersPage() {
 
           <OrderInformationInMonth />
 
-
-          <div className="flex gap-8 items-center bg-gray-100 p-4">
-              <Link href='/orders' className="font-semibold p-2 px-4 rounded-lg">
-                  Đơn hàng
-              </Link>
-              <Link href='/products'>Sản phẩm</Link>
-          </div>
-        
         <table className="w-full border border-collapse shadow-md">
             <thead className='bg-gray-200'>
                 <tr className="border-b *:text-left *:p-4">
@@ -35,9 +27,9 @@ export default async function OrdersPage() {
                         <tr key={order.id} className='border-b-2 *:p-4'>
                             <td>
                                 <ol className="pl-4 list-disc">
-                                    {order.line_items.map(lineItem => (
-                                        <li key={lineItem.id}>
-                                            {lineItem.product_name} x {lineItem.quantity}
+                                    {order.items.map(lineItem => (
+                                        <li key={lineItem.itemID}>
+                                            {lineItem.name} x {lineItem.quantity}
                                         </li>
                                     ))}
                                 </ol>

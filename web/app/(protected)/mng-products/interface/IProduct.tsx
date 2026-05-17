@@ -1,9 +1,9 @@
 export default interface IProduct {
     id: string;
     name: string;
-    price: string;
-    salePrice?: string;
-    finalPrice: string;
+    price: number;
+    salePrice?: number;
+    finalPrice: number;
     formatedPrice: string;
     formatedSalePrice?: string;
     formatedFinalPrice: string;

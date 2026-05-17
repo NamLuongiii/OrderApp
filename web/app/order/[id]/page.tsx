@@ -1,6 +1,9 @@
 import getOrder from "@/app/order/[id]/api/getOrder";
 import {Input} from "@/components/ui/input";
-import Order from "@/app/order/[id]/interface/order";
+import {Button} from "@/components/ui/button";
+import Image from "next/image";
+import cuteKidImage from "@/public/cute-kid.jpg"
+import {CancelOrderAction} from "@/app/order/[id]/component/CancelOrderAction";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const {id} = await params
@@ -15,25 +18,33 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     if (error || !order) return <div>{error}</div>
 
-    return <div className='space-y-4'>
-        <h1>Thông tin đơn hàng</h1>
-        <div className='space-y-2'>
+    return <div className='space-y-8 py-8'>
+        <div>
+            <h1 className='text-2xl'>Thông tin đơn hàng</h1>
+            <div className='text-lg font-semibold'>#{order.id}</div>
+        </div>
+        <table className='w-full border-collapse'>
+            <tbody>
             {order.items.map(lineItem => (
-                <div key={lineItem.itemID}>
-                    <div>
-                        {lineItem.name}
-                        {lineItem.quantity}
-                        {lineItem.price}
-                        {lineItem.total}
-                    </div>
-                </div>
+                <tr key={lineItem.itemID}>
+                    <td>
+                        <Image src={cuteKidImage} alt="" width={100} height={100} className='object-cover aspect-square' />
+                    </td>
+                    <td>{lineItem.name}</td>
+                    <td className='text-right'>x{lineItem.quantity}</td>
+                    <td className='text-right'>{lineItem.formattedTotal}</td>
+                </tr>
             ))}
+            </tbody>
+        </table>
 
-            <div>Tổng tiền đơn hàng {order.total}</div>
+        <div className='flex justify-between items-baseline'>
+            <span>Tổng tiền đơn hàng</span>
+            <span className='text-2xl font-semibold'>{order.total}</span>
         </div>
 
-        <div className='space-y-2'>
-            <h2>Thông tin nhận hàng</h2>
+        <div className='space-y-4'>
+            <h2 className='text-xl'>Thông tin nhận hàng</h2>
             <Input value={order.name} disabled />
             <Input value={order.email} disabled />
             <Input value={order.phone} disabled />
@@ -41,12 +52,16 @@ export default async function Page({ params }: { params: { id: string } }) {
             <Input value={order.note} disabled />
         </div>
 
-        <div>
-            {order.status === 'PROCESSING' && 'Đợi chủ shop xác nhận đơn'}
+        <div className='text-xl font-semibold'>
+            {order.status === 'PENDING' && 'Đợi chủ shop xác nhận đơn'}
             {order.status === 'CANCELED' && 'Đơn hàng đã bị huỷ'}
             {order.status === 'CONFIRMED' && 'Chủ shop đã xác nhận và đang chuẩn bị hàng'}
             {order.status === 'DELIVERED' && 'Đơn hàng đã được gửi cho đơn vị vận chuyển'}
             {order.status === 'COMPLETED' && 'Đơn hàng đã hoàn tất'}
         </div>
+
+        {order.status !== 'CANCELED' && <div>
+            <CancelOrderAction orderId={id} />
+        </div>}
     </div>
 }

@@ -5,8 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21834ba2-9244-4c45-9997-88e2fcc2b3d9" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/[id]/api/getProduct.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/[id]/component/Form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/[id]/interface/ProductForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/api/getProducts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/interface/IProduct.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/interface/IProductResponse.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/new/component/Form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/new/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/mng-products/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/api/changeStatus.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/component/StatusAction.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/interface/OrderDetail.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/order/[id]/api/changeStatus.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/app/order/[id]/component/CancelOrderAction.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/shared/axios/getMeApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/shared/axios/getProductApi.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/api/getOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/api/getOrder.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/api/getOrders.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/api/getOrders.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/IOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/IOrder.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/IOrderResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/IOrderResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/status.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/interface/status.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/(protected)/orders/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/(protected)/orders/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/home/interface/IProduct.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/home/interface/IProduct.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/order/[id]/api/getOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/order/[id]/api/getOrder.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/order/[id]/interface/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/order/[id]/interface/OrderDetail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/order/[id]/interface/status.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/order/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/app/order/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/app/products/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/components/ui/input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/components/ui/input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/shared/class/money.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../web/shared/class/money.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

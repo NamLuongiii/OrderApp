@@ -1,1 +1,0 @@
-export type Status = "PROCESSING" | "CONFIRMED" | "CANCELED" | "DELIVERED" | "COMPLETED"

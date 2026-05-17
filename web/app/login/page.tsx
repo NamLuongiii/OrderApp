@@ -36,7 +36,7 @@ export default function LoginPage() {
         try {
             const token = await mutateAsync(data)
 
-            Cookies.set('auth-token', token, { expires: 1 });
+            Cookies.set('auth-token', token, { expires: 12 / 24 });
 
             router.push(callbackUrl);
             router.refresh();

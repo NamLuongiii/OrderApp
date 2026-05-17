@@ -2,15 +2,15 @@ import BigNumber from "bignumber.js";
 
 export default class Money {
 
-    constructor(public amount: string) {
+    constructor(public amount: string | number) {
         this.amount = amount;
     }
 
-    plus(m: string): Money {
+    plus(m: string | number): Money {
         return new Money(new BigNumber(this.amount).plus(m).toString())
     }
 
-    multiply(m: string): Money {
+    multiply(m: string | number): Money {
         return new Money(new BigNumber(this.amount).multipliedBy(m).toString())
     }
 
@@ -19,6 +19,6 @@ export default class Money {
     }
 
     toString(): string {
-        return this.amount
+        return this.amount.toString()
     }
 }
